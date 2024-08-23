@@ -1,5 +1,5 @@
 {
-  "name": "amazon-cypress-smoke-tests",
+  "name": "week-11-automation",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
