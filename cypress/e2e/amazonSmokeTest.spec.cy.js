@@ -1,3 +1,5 @@
+// cypress/e2e/amazonSmokeTest.spec.cy.js
+
 import HomePage from "../pageObjects/HomePage";
 import SearchPage from "../pageObjects/SearchPage";
 import CartPage from "../pageObjects/CartPage";
