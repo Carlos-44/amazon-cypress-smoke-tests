@@ -23,3 +23,15 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+
+Cypress.Commands.add('setupAmazonTest', () => {
+  cy.viewport(1366, 768);
+  cy.visit('https://www.amazon.com', { timeout: 30000 });
+  cy.clearCookies();
+  cy.log('Setup complete: Viewport set, visited page, and cleared cookies');
+});
+
+
+
+  
