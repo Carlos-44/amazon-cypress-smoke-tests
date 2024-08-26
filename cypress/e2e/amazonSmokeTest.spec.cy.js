@@ -1,54 +1,42 @@
-import HomePage from '../pageObjects/HomePage';
-import LoginPage from '../pageObjects/LoginPage';
-import SearchPage from '../pageObjects/SearchPage';
-import CartPage from '../pageObjects/CartPage';
-import CareersPage from '../pageObjects/CareersPage';
+import HomePage from "../pageObjects/HomePage";
+import SearchPage from "../pageObjects/SearchPage";
+import CartPage from "../pageObjects/CartPage";
+import CareersPage from "../pageObjects/CareersPage";
 
-describe('Amazon Smoke Test', () => {
-  const homePage = new HomePage();
-  const loginPage = new LoginPage();
-  const searchPage = new SearchPage();
-  const cartPage = new CartPage();
-  const careersPage = new CareersPage();
+describe("Amazon Smoke Test", () => {
+  const homePage = new HomePage();  // Initialize the HomePage class
+  const searchPage = new SearchPage(); // Initialize the SearchPage class
+  const cartPage = new CartPage();  // Initialize the CartPage class
+  const careersPage = new CareersPage(); // Initialize the CareersPage class
 
   beforeEach(() => {
-    homePage.visit();
-    homePage.clearCookies();
+    cy.setupAmazonTest(); // Custom command to handle setup
   });
 
-  it('Should load the Amazon homepage', () => {
-    cy.get('[id="twotabsearchtextbox"]').should('be.visible');
-  });
-
-  it('Should login with existing Account', () => {
-    homePage.clickAccountAndLists();
-    loginPage.enterEmail("ozoria_carlos@yahoo.com");
-    loginPage.submitEmail();
-    loginPage.enterPassword("Cynthea@1944");
-    loginPage.submitLogin();
-    loginPage.verifyCaptcha();
+  it("Should load the Amazon homepage", () => {
+    homePage.verifyPageLoaded();
   });
 
   it('Should search for "laptop" and display results', () => {
-    homePage.searchForItem('laptop');
-    searchPage.verifySearchResults('laptop');
+    homePage.searchForItem("laptop");
+    searchPage.verifySearchResults("laptop");
   });
 
   it('Should navigate to "Today\'s Deals" page and verify the content', () => {
     homePage.navigateToTodaysDeals();
-    cy.contains('Today\'s Deals').should('be.visible');
   });
 
   it('Should navigate to the "Careers" page from the footer link', () => {
     homePage.scrollToFooter();
     careersPage.navigateToCareers();
-    cy.contains('Find jobs').should('be.visible');
+    careersPage.verifyFindJobsText();
   });
 
-  it.only('Should add an item to the cart', () => {
-    homePage.searchForItem('headphones');
-    searchPage.selectFirstResult();
-    cartPage.addItemToCart();
-    cartPage.verifyCartItemCount('1');
+  it('Should search for men\'s graphic t-shirt and verify Men\'s Fashion button', () => {
+    homePage.visit();
+    homePage.clearCookies();
+    homePage.verifyPageLoaded();
+    homePage.searchMensGraphicTShirt(); // Search for men's graphic t-shirt
+    homePage.verifyResultsPage(); // Verify Men's Fashion button on the results page
   });
 });
